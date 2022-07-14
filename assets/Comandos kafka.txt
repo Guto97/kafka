@@ -1,0 +1,11 @@
+Abrir terminal do kafka:
+	winpty docker exec -it kafka "bash"
+
+Criar tópico:
+	kafka-topics --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 3 --topic achoepouco --if-not-exists
+
+Listar tópico:
+	 usr/bin/kafka-topics --zookeeper zookeeper:2181 --list
+	 
+Detalhes do tópico:
+	usr/bin/kafka-topics --zookeeper zookeeper:2181	--topic achoepouco --describe
