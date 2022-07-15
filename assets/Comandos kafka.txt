@@ -1,6 +1,8 @@
 Abrir terminal do kafka:
 	winpty docker exec -it kafka "bash"
 
+Tópico:
+
 Criar tópico:
 	kafka-topics --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 3 --topic achoepouco --if-not-exists
 
@@ -9,3 +11,24 @@ Listar tópico:
 	 
 Detalhes do tópico:
 	usr/bin/kafka-topics --zookeeper zookeeper:2181	--topic achoepouco --describe
+
+Producer:
+
+Enviar mensagem:
+	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic choreimangamastafeito
+	- Vai abrir o console do producer. Depois é só digitar a mensagem e enviar com enter. Para sair do console producer é CTRL + C
+
+Enviar mensagem com chave e valor:
+	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic choreimangamastafeito --property parse.key=true --property key.separator=":"
+	- Vai abrir o console do producer. Depois é só digitar a mensagem e enviar com enter, lembrando que o formato deve ser (chave:valor). CTRL + C	p/ sair.
+	EX: key1:Teste, Foo:Teste
+
+Consumer:
+
+Consumindo as mensagens:
+	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning
+	- Vai abrir o console do consumer e consumir todas mensagens. CTRL + C p/ sair.
+
+Consumindo mensagens com chave e valor: 
+	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning --property print.key=true --property key.separator="-"
+	- Vai abrir o console do consumer e consumir todas mensagens. CTRL + C p/ sair.
