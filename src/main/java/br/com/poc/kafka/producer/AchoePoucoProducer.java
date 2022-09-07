@@ -7,19 +7,19 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class ChoreiMangaProducer {
+public class AchoePoucoProducer {
 
     private final String topic;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public ChoreiMangaProducer(@Value("${kafka.name}") String topic, KafkaTemplate<String, String> kafkaTemplate) {
+    public AchoePoucoProducer(@Value("${topic.name}") String topic, KafkaTemplate<String, String> kafkaTemplate) {
         this.topic = topic;
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void send(String text) {
         kafkaTemplate.send(topic, UUID.randomUUID().toString(), text).addCallback(
-                success -> System.out.println("Chupa essa manga!!!"),
+                success -> System.out.println("Deu bom!!!"),
                 failure -> System.out.println("Deu ruim: " + failure.getCause())
         );
     }

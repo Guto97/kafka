@@ -1,10 +1,14 @@
 Abrir terminal do kafka:
 	winpty docker exec -it kafka "bash"
-
+Fechar terminal: CRTL + D
 Tópico:
 
 Criar tópico:
 	kafka-topics --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 3 --topic achoepouco --if-not-exists
+	
+Retenção da mensagem:
+	*kafka-topics --alter --zookeeper zookeeper:2181 --entity-type topic --entity-name achoepouco --add-config retenção.minutes = 1
+	*kafka-configs --zookeeper localhost:2181 --entity-type topics --entity-name achoepouco --alter --add-config retention..minutes = 1
 
 Listar tópico:
 	 usr/bin/kafka-topics --zookeeper zookeeper:2181 --list
@@ -12,10 +16,13 @@ Listar tópico:
 Detalhes do tópico:
 	usr/bin/kafka-topics --zookeeper zookeeper:2181	--topic achoepouco --describe
 
+Deletar tópico:
+	usr/bin/kafka-topics --zookeeper zookeeper:2181 --delete --topic achoepouco
+
 Producer:
 
 Enviar mensagem:
-	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic choreimangamastafeito
+	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic achoepouco
 	- Vai abrir o console do producer. Depois é só digitar a mensagem e enviar com enter. Para sair do console producer é CTRL + C
 
 Enviar mensagem com chave e valor:
@@ -28,6 +35,9 @@ Consumer:
 Consumindo as mensagens:
 	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning
 	- Vai abrir o console do consumer e consumir todas mensagens. CTRL + C p/ sair.
+	
+	*usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --partition 0 --from-beginning
+	- consumindo direto de uma partição
 
 Consumindo mensagens com chave e valor: 
 	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning --property print.key=true --property key.separator="-"
