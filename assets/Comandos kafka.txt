@@ -6,9 +6,11 @@ Tópico:
 Criar tópico:
 	kafka-topics --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 3 --topic achoepouco --if-not-exists
 	
-Retenção da mensagem:
-	*kafka-topics --alter --zookeeper zookeeper:2181 --entity-type topic --entity-name achoepouco --add-config retenção.minutes = 1
-	*kafka-configs --zookeeper localhost:2181 --entity-type topics --entity-name achoepouco --alter --add-config retention..minutes = 1
+Retenção da mensagem: não entendi o comportamento parece bugado
+	usr/bin/kafka-configs --alter --bootstrap-server localhost:9092 --entity-type topics --entity-name achoepouco --add-config retention.ms=3000
+	
+Remover Retenção: 
+	usr/bin/kafka-configs --alter --bootstrap-server localhost:9092 --entity-type topics --entity-name achoepouco --delete-config retention.ms
 
 Listar tópico:
 	 usr/bin/kafka-topics --zookeeper zookeeper:2181 --list
@@ -22,8 +24,11 @@ Deletar tópico:
 Producer:
 
 Enviar mensagem:
-	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic achoepouco
+	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic choreimangamastafeito 
 	- Vai abrir o console do producer. Depois é só digitar a mensagem e enviar com enter. Para sair do console producer é CTRL + C
+	
+	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic choreimangamastafeito --property key.separator=1
+	- Produzindo mensagem em uma partição especifica *no separator tem que colocar o numero real da partition iniciando do 1.
 
 Enviar mensagem com chave e valor:
 	usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic choreimangamastafeito --property parse.key=true --property key.separator=":"
@@ -33,11 +38,11 @@ Enviar mensagem com chave e valor:
 Consumer:
 
 Consumindo as mensagens:
-	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning
+	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic achoepouco --from-beginning
 	- Vai abrir o console do consumer e consumir todas mensagens. CTRL + C p/ sair.
 	
-	*usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --partition 0 --from-beginning
-	- consumindo direto de uma partição
+	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --partition 0 --from-beginning
+	- consumindo direto de uma partição 
 
 Consumindo mensagens com chave e valor: 
 	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning --property print.key=true --property key.separator="-"
