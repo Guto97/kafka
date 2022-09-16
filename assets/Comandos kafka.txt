@@ -20,6 +20,10 @@ Detalhes do tópico:
 
 Deletar tópico:
 	usr/bin/kafka-topics --zookeeper zookeeper:2181 --delete --topic achoepouco
+	
+Deletar mensagens do tópico
+		usr/bin/kafka-delete-records --bootstrap-server localhost:9092 --entity-type topics --entity-name choreimangamastafeito --partition 0 --offset 0
+		:/usr/bin# kafdelete-records --bootstrap-server localhost:9092 --offset-json-file /home/delete-message.json
 
 Producer:
 
@@ -47,3 +51,5 @@ Consumindo as mensagens:
 Consumindo mensagens com chave e valor: 
 	usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic choreimangamastafeito --from-beginning --property print.key=true --property key.separator="-"
 	- Vai abrir o console do consumer e consumir todas mensagens. CTRL + C p/ sair.
+	
+exec $(dirname $0)/kafka-run-class.sh kafka.admin.DeleteRecordsComman "$@"
