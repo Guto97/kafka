@@ -12,7 +12,7 @@ public class ChoreiMangaProducer {
     private final String topic;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public ChoreiMangaProducer(@Value("${kafka.name}") String topic, KafkaTemplate<String, String> kafkaTemplate) {
+    public ChoreiMangaProducer(@Value("${spring.kafka.topic}") String topic, KafkaTemplate<String, String> kafkaTemplate) {
         this.topic = topic;
         this.kafkaTemplate = kafkaTemplate;
     }
